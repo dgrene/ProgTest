@@ -9,11 +9,14 @@ object AddressCache {
   addcache.add(new Address("google.com"))         //> res0: scala.collection.mutable.LinkedHashSet[week8.Address] = Set(Address(go
                                                   //| ogle.com))
 
-  //addcache.add(new Address("yahoo.com"))
+  addcache.add(new Address("yahoo.com"))          //> res1: scala.collection.mutable.LinkedHashSet[week8.Address] = Set(Address(go
+                                                  //| ogle.com), Address(yahoo.com))
 
-  //addcache.add(new Address("webcat.com"))
+  addcache.add(new Address("webcat.com"))         //> res2: scala.collection.mutable.LinkedHashSet[week8.Address] = Set(Address(go
+                                                  //| ogle.com), Address(yahoo.com), Address(webcat.com))
 
-  //addcache.add(new Address("webcat1.com"))
+  addcache.add(new Address("webcat1.com"))        //> res3: scala.collection.mutable.LinkedHashSet[week8.Address] = Set(Address(go
+                                                  //| ogle.com), Address(yahoo.com), Address(webcat.com), Address(webcat1.com))
 
   //addcache.add(new Address("webcat2.com"))
   //addcache.add(new Address("webcat3.com"))
@@ -21,10 +24,9 @@ object AddressCache {
 
   addcache.remove(Address("webcat.com"))
 
-  addcache.peek                                   //> res1: week8.Address = Address(google.com)
+  addcache.peek                                   //> res4: week8.Address = Address(webcat1.com)
 
-  addcache.take                                   //> res2: scala.collection.mutable.LinkedHashSet[week8.Address] = Set()
-
+  addcache.take                                   //> res5: week8.Address = Address(webcat1.com)
 
 }
 
@@ -50,7 +52,10 @@ class AddressCache(maxAge: Long, TimeUnit: String) {
   def take() = {
     l.lastOption match {
       case None => null
-      case _    => l -= l.last
+      case x: Option[Address] => {
+        l -= l.last
+        x.get
+      }
     }
   }
 
